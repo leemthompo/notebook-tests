@@ -24,7 +24,7 @@ jobs:
               if (file.filename.endsWith(".ipynb")) {
                 const notebookPath = file.filename;
                 const colabLink = `https://colab.research.google.com/github/${context.repo.owner}/${context.repo.repo}/blob/${pr.head.ref}/${notebookPath}`;
-                comment += `- [${notebookPath}](${colabLink})\n`;
+                comment += `[${notebookPath}](${colabLink})\n`;
               }
             }
             github.rest.issues.createComment({
