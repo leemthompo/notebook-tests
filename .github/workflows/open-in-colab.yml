@@ -1,0 +1,35 @@
+on:
+  pull_request_target:
+    types: [opened]
+    paths:
+      - '**.ipynb'
+
+jobs:
+  notebook-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        name: Add notebook Colab link
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const filesChanged = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+            });
+            let comment = `View the updated notebooks in this PR at:\n`;
+            for (const file of filesChanged.data) {
+              if (file.filename.endsWith(".ipynb")) {
+                const notebookPath = file.filename;
+                const colabLink = `https://colab.research.google.com/github/${context.repo.owner}/${context.repo.repo}/blob/${pr.head.ref}/${notebookPath}`;
+                comment += `[${notebookPath}](${colabLink})\n`;
+              }
+            }
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment,
+            });
