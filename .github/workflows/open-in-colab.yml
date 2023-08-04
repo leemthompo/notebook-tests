@@ -19,7 +19,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number,
             });
-            let comment = `View the updated notebooks in this PR at:\n`;
+            let comment = `![Colab](https://colab.research.google.com/assets/colab-badge.svg) Test the notebook in this PR in Google Colab:\n`;
             for (const file of filesChanged.data) {
               if (file.filename.endsWith(".ipynb")) {
                 const notebookPath = file.filename;
