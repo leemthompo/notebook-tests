@@ -19,12 +19,12 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number,
             });
-            let comment = `![Colab](https://colab.research.google.com/assets/colab-badge.svg) Test the notebook in this PR in Google Colab:\n`;
+            let comment = `<img width="200" alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg"> \nTest notebook(s) in this PR in Google Colab:\n`;
             for (const file of filesChanged.data) {
               if (file.filename.endsWith(".ipynb")) {
                 const notebookPath = file.filename;
                 const colabLink = `https://colab.research.google.com/github/${context.repo.owner}/${context.repo.repo}/blob/${pr.head.ref}/${notebookPath}`;
-                comment += `[${notebookPath}](${colabLink})\n`;
+                comment += `- [${notebookPath}](${colabLink})\n`;
               }
             }
             github.rest.issues.createComment({
