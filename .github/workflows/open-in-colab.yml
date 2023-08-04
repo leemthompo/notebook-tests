@@ -19,7 +19,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number,
             });
-            let comment = `<img width="200" alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg"> \nTest notebook(s) in this PR in Google Colab:\n`;
+            let comment = `<img width="200" alt="Colab" src="https://colab.research.google.com/assets/colab-badge.svg"> \n<h3>Test notebook(s) in this PR in Google Colab:</h3>\n`;
             for (const file of filesChanged.data) {
               if (file.filename.endsWith(".ipynb")) {
                 const notebookPath = file.filename;
