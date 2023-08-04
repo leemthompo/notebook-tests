@@ -19,12 +19,12 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr.number,
             });
-            let comment = `View the updated notebooks in this PR at:\n`;
+            let comment = `View notebooks in this PR at:\n`;
             for (const file of filesChanged.data) {
               if (file.filename.endsWith(".ipynb")) {
                 const notebookPath = file.filename;
                 const colabLink = `https://colab.research.google.com/github/${context.repo.owner}/${context.repo.repo}/blob/${pr.head.ref}/${notebookPath}`;
-                comment += `[${notebookPath}](${colabLink})\n`;
+                comment += `[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](${colabLink})\n`;
               }
             }
             github.rest.issues.createComment({
